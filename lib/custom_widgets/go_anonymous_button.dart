@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-class LoginAnonymously extends StatelessWidget {
+class SignInAnonymously extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(onPressed: (){},
       style: ButtonStyle(
-        elevation: MaterialStateProperty.all(12),
+        elevation: MaterialStateProperty.all(6),
         shape: MaterialStateProperty.all(StadiumBorder()),
-        padding: MaterialStateProperty.all(EdgeInsets.all(12)),
+        padding: MaterialStateProperty.all(EdgeInsets.all(14)),
         backgroundColor: MaterialStateProperty.all(Colors.white),
       ),
       child: Row(

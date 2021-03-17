@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-class LoginGoogle extends StatelessWidget {
+class SignInEmail extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(onPressed: (){},
       style: ButtonStyle(
-        elevation: MaterialStateProperty.all(12),
+        elevation: MaterialStateProperty.all(6),
         shape: MaterialStateProperty.all(StadiumBorder()),
-        padding: MaterialStateProperty.all(EdgeInsets.all(12)),
-        backgroundColor: MaterialStateProperty.all(Colors.white),
+        padding: MaterialStateProperty.all(EdgeInsets.all(14)),
+        backgroundColor: MaterialStateProperty.all(Colors.teal[200]),
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -15,13 +15,13 @@ class LoginGoogle extends StatelessWidget {
           SizedBox(
             height: 30,
             width: 30,
-            child: Image(image: AssetImage(
-              "assets/images/g-logo.png",
-            ),
-              fit: BoxFit.scaleDown,),
+            child:Icon(
+              Icons.keyboard,
+              color: Colors.black,
+            )
           ),
           Text(
-            "Login with Google",
+            "Sign In with Email",
             style: (
                 TextStyle(
                   color: Colors.black,
@@ -30,13 +30,13 @@ class LoginGoogle extends StatelessWidget {
           ),
           Opacity(
             opacity: 0.0,
-            child: SizedBox(
-              height: 30,
-              width: 30,
-              child: Image(image: AssetImage(
-                "assets/images/g-logo.png",
-              ),
-                fit: BoxFit.scaleDown,),
+            child:  SizedBox(
+                height: 30,
+                width: 30,
+                child:Icon(
+                  Icons.keyboard,
+                  color: Colors.black,
+                )
             ),
           ),
         ],

@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-class LoginFacebook extends StatelessWidget {
+class SignInFacebook extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(onPressed: (){},
       style: ButtonStyle(
-        elevation: MaterialStateProperty.all(12),
+        elevation: MaterialStateProperty.all(6),
         shape: MaterialStateProperty.all(StadiumBorder()),
-        padding: MaterialStateProperty.all(EdgeInsets.all(12)),
+        padding: MaterialStateProperty.all(EdgeInsets.all(14)),
         backgroundColor: MaterialStateProperty.all(Color(0xff3b5998)),
       ),
       child: Row(
@@ -18,10 +18,11 @@ class LoginFacebook extends StatelessWidget {
             child: Image(image: AssetImage(
               "assets/images/facbook-logo.jpg",
             ),
+              isAntiAlias: true,
               fit: BoxFit.fill,),
           ),
           Text(
-            "Login with Facebook",
+            "Sign In with Facebook",
             style: (
                 TextStyle(
                   color: Colors.white,

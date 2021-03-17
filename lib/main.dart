@@ -1,9 +1,9 @@
 
 import 'package:flutter/material.dart';
-import 'package:time_tracker/custom_widgets/facebook_login_button.dart';
+import 'package:time_tracker/custom_widgets/facebook_SignIn_button.dart';
 import 'package:time_tracker/custom_widgets/go_anonymous_button.dart';
-import 'package:time_tracker/custom_widgets/google_login_button.dart';
-import 'package:time_tracker/custom_widgets/login_with_email_button.dart';
+import 'package:time_tracker/custom_widgets/google_SignIn_button.dart';
+import 'package:time_tracker/custom_widgets/SignIn_with_email_button.dart';
 
 void main() {
   runApp(MyApp());
@@ -18,11 +18,11 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.indigo,
       ),
-      home: MyLoginPage(),
+      home: MySigninPage(),
     );
   }
 }
-class MyLoginPage extends StatelessWidget {
+class MySigninPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,24 +40,24 @@ class MyLoginPage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              "Login",
+              "Sign In",
               style: TextStyle(
-                fontSize: 22,
+                fontSize: 30,
                 fontWeight: FontWeight.w700,
               ),
             ),
             SizedBox(
               height: 50,
             ),
-            LoginGoogle(),
+            SignInGoogle(),
             SizedBox(
               height: 22,
             ),
-            LoginFacebook(),
+            SignInFacebook(),
             SizedBox(
               height: 22,
             ),
-            LoginEmail(),
+            SignInEmail(),
             SizedBox(
               height: 22,
             ),
@@ -67,7 +67,7 @@ class MyLoginPage extends StatelessWidget {
             SizedBox(
               height: 22,
             ),
-            LoginAnonymously(),
+            SignInAnonymously(),
           ],
         ),
       ),

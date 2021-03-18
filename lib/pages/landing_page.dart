@@ -19,7 +19,10 @@ class _LandingPageState extends State<LandingPage> {
 
   @override
   Widget build(BuildContext context) {
-    return (_user!=null)?HomePage():MySignInPage(
+    return (_user!=null)?HomePage(
+      signOutCallback: ()=>_updateUser(null),
+    )
+        :MySignInPage(
       onSignIn: (user)=>_updateUser(user),
     );
   }

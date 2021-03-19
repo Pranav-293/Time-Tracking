@@ -16,7 +16,12 @@ class _LandingPageState extends State<LandingPage> {
     _user = user;
   });
   }
-
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _updateUser(FirebaseAuth.instance.currentUser);
+  }
   @override
   Widget build(BuildContext context) {
     return (_user!=null)?HomePage(

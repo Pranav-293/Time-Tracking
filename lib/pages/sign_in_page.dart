@@ -14,6 +14,15 @@ class MySignInPage extends StatelessWidget {
     }
   }
 
+  //A function to sign in with google
+  Future<void> signInWithGoogle() async {
+    try {
+      await auth.signInWithGoogle();
+    } catch (e) {
+      print(e.toString());
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -45,7 +54,7 @@ class MySignInPage extends StatelessWidget {
 
             //Sign In using google
             ElevatedButton(
-              onPressed: () {},
+              onPressed: signInWithGoogle,
               style: ButtonStyle(
                 elevation: MaterialStateProperty.all(6),
                 shape: MaterialStateProperty.all(StadiumBorder()),

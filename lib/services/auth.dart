@@ -4,6 +4,7 @@ abstract class AuthBase{
   User get currentUser;
   Future<UserCredential> signInAnonymously();
   Future<void> signOut();
+  Stream<User> authStateChange();
 }
 class AuthClass implements AuthBase{
   @override
@@ -14,6 +15,10 @@ class AuthClass implements AuthBase{
     final userCredential =  await FirebaseAuth.instance.signInAnonymously();
     return userCredential;
   }
+
+  @override
+  Stream<User> authStateChange() => FirebaseAuth.instance.authStateChanges();
+  
   @override
   Future<void> signOut() async{
      await FirebaseAuth.instance.signOut();

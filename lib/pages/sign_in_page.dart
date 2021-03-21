@@ -22,6 +22,13 @@ class MySignInPage extends StatelessWidget {
       print(e.toString());
     }
   }
+  Future<void> signInWithFacebook() async {
+    try {
+      await auth.signInWithFacebook();
+    } catch (e) {
+      print(e.toString());
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -103,7 +110,7 @@ class MySignInPage extends StatelessWidget {
 
             //Sign In using facebook
             ElevatedButton(
-              onPressed: () {},
+              onPressed: signInWithFacebook,
               style: ButtonStyle(
                 elevation: MaterialStateProperty.all(6),
                 shape: MaterialStateProperty.all(StadiumBorder()),

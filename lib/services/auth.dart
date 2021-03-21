@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_login_facebook/flutter_login_facebook.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 abstract class AuthBase {
@@ -11,6 +12,8 @@ abstract class AuthBase {
   Future<void> signInWithGoogle();
 
   Stream<User> authStateChange();
+
+  Future<void> signInWithFacebook();
 }
 
 class AuthClass implements AuthBase {
@@ -52,12 +55,40 @@ class AuthClass implements AuthBase {
   }
 
   @override
+  Future<void> signInWithFacebook() async{
+    final fb = FacebookLogin();
+    final response = await fb.logIn(
+      permissions: [
+        FacebookPermission.publicProfile,
+        FacebookPermission.email,
+      ]
+    );
+    switch(response.status){
+      case FacebookLoginStatus.success:
+        final tokenNum = response.accessToken;
+        final userCredential = await FirebaseAuth.instance.signInWithCredential(
+          FacebookAuthProvider.credential(tokenNum.token)
+        );
+        return userCredential;
+      case FacebookLoginStatus.cancel:
+        throw FirebaseAuthException(code: "Sign_Up_Aborted_By_The_User",message: "Sign in cancelled by the user");
+      case FacebookLoginStatus.error:
+        throw FirebaseAuthException(code: "Sign_Up_Aborted_By_The_Error",message:response.error.developerMessage);
+      default:
+        throw UnimplementedError;
+
+    }
+  }
+
+  @override
   Stream<User> authStateChange() => FirebaseAuth.instance.authStateChanges();
 
   @override
   Future<void> signOut() async {
     final googleSignIn = GoogleSignIn();
-    googleSignIn.signOut();
+     googleSignIn.signOut();
+    final fb = FacebookLogin();
+     fb.logOut();
     await FirebaseAuth.instance.signOut();
   }
 }

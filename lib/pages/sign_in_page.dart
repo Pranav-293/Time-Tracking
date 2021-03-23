@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:time_tracker/pages/login_with_email_page.dart';
 import 'package:time_tracker/services/auth.dart';
 
 class MySignInPage extends StatelessWidget {
@@ -22,6 +23,8 @@ class MySignInPage extends StatelessWidget {
       print(e.toString());
     }
   }
+
+  //A function for singing in with facebook
   Future<void> signInWithFacebook() async {
     try {
       await auth.signInWithFacebook();
@@ -159,7 +162,11 @@ class MySignInPage extends StatelessWidget {
             ),
 
             //Sign In using Email
-            ElevatedButton(onPressed: (){},
+            ElevatedButton(onPressed: (){
+              Navigator.of(context).push(
+                MaterialPageRoute(builder:(context)=>LoginWithEmail(context:context,auth: auth,),fullscreenDialog: true)
+              );
+            },
               style: ButtonStyle(
                 elevation: MaterialStateProperty.all(6),
                 shape: MaterialStateProperty.all(StadiumBorder()),

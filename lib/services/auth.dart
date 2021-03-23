@@ -9,6 +9,10 @@ abstract class AuthBase {
 
   Future<void> signOut();
 
+  Future<void> signInWithEmail(String email, String password);
+
+  Future<void> createAccountWithEmail(String email, String password);
+
   Future<void> signInWithGoogle();
 
   Stream<User> authStateChange();
@@ -33,20 +37,20 @@ class AuthClass implements AuthBase {
     if (googleUser != null) {
       final googleUserCredentials = await googleUser.authentication;
       if (googleUserCredentials.idToken != null) {
-        final userCredential =await FirebaseAuth.instance.signInWithCredential(
+        final userCredential = await FirebaseAuth.instance.signInWithCredential(
           GoogleAuthProvider.credential(
             idToken: googleUserCredentials.idToken,
             accessToken: googleUserCredentials.accessToken,
           ),
         );
         return userCredential;
-      }else{
+      } else {
         throw FirebaseAuthException(
           code: "Exception_Token_Id_is_Null",
           message: "Sign In aborted by the token Id",
         );
       }
-    }else{
+    } else {
       throw FirebaseAuthException(
         code: "Exception_SignIn_Aborted_By_User",
         message: "Sign In aborted by the user",
@@ -55,28 +59,51 @@ class AuthClass implements AuthBase {
   }
 
   @override
-  Future<void> signInWithFacebook() async{
+  Future<void> signInWithFacebook() async {
     final fb = FacebookLogin();
     final response = await fb.logIn(
-      permissions: [
-        FacebookPermission.publicProfile,
-        FacebookPermission.email,
-      ]
+        permissions: [
+          FacebookPermission.publicProfile,
+          FacebookPermission.email,
+        ]
     );
-    switch(response.status){
+    switch (response.status) {
       case FacebookLoginStatus.success:
         final tokenNum = response.accessToken;
         final userCredential = await FirebaseAuth.instance.signInWithCredential(
-          FacebookAuthProvider.credential(tokenNum.token)
+            FacebookAuthProvider.credential(tokenNum.token)
         );
         return userCredential;
       case FacebookLoginStatus.cancel:
-        throw FirebaseAuthException(code: "Sign_Up_Aborted_By_The_User",message: "Sign in cancelled by the user");
+        throw FirebaseAuthException(code: "Sign_Up_Aborted_By_The_User",
+            message: "Sign in cancelled by the user");
       case FacebookLoginStatus.error:
-        throw FirebaseAuthException(code: "Sign_Up_Aborted_By_The_Error",message:response.error.developerMessage);
+        throw FirebaseAuthException(code: "Sign_Up_Aborted_By_The_Error",
+            message: response.error.developerMessage);
       default:
         throw UnimplementedError;
+    }
+  }
 
+  @override
+  Future<void> signInWithEmail(String email, String password) async {
+    try {
+      final userCredentials = await FirebaseAuth.instance.signInWithCredential(
+          EmailAuthProvider.credential(email: email, password: password));
+      return userCredentials;
+    } catch (e) {
+      print(e.toString());
+    }
+  }
+
+  @override
+  Future<void> createAccountWithEmail(String email, String password) async {
+    try {
+      final userCredential = await FirebaseAuth.instance
+          .createUserWithEmailAndPassword(email: email, password: password);
+      return userCredential;
+    }catch(e){
+      print(e.toString());
     }
   }
 
@@ -86,9 +113,9 @@ class AuthClass implements AuthBase {
   @override
   Future<void> signOut() async {
     final googleSignIn = GoogleSignIn();
-     googleSignIn.signOut();
+    googleSignIn.signOut();
     final fb = FacebookLogin();
-     fb.logOut();
+    fb.logOut();
     await FirebaseAuth.instance.signOut();
   }
 }

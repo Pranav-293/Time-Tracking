@@ -93,6 +93,7 @@ class AuthClass implements AuthBase {
       return userCredentials;
     } catch (e) {
       print(e.toString());
+      throw e;
     }
   }
 
@@ -103,7 +104,7 @@ class AuthClass implements AuthBase {
           .createUserWithEmailAndPassword(email: email, password: password);
       return userCredential;
     }catch(e){
-      print(e.toString());
+      throw e;
     }
   }
 

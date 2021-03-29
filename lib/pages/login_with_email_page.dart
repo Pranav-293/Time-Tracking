@@ -1,13 +1,11 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:time_tracker/services/auth.dart';
 
 enum EmailSignInFormType { signIn, register }
 
 class LoginWithEmail extends StatefulWidget {
-  LoginWithEmail({this.context, this.auth});
-
-  final BuildContext context;
-  final AuthClass auth;
   @override
   _LoginWithEmailState createState() => _LoginWithEmailState();
 }
@@ -25,17 +23,26 @@ class _LoginWithEmailState extends State<LoginWithEmail> {
   EmailSignInFormType _formType = EmailSignInFormType.signIn;
 
   void _submit() async {
+    final auth = Provider.of<AuthClass>(context, listen:false);
     if(_formKey.currentState.validate()){
       setState(() {
         inDelay = true;
       });
       try {
         (_formType == EmailSignInFormType.signIn)
-            ? await widget.auth.signInWithEmail(_email, _password) : widget.auth.createAccountWithEmail(_email, _password);
-        if (widget.auth.currentUser != null) {
+            ? await auth.signInWithEmail(_email, _password) : await auth.createAccountWithEmail(_email, _password);
+        if (auth.currentUser != null) {
           Navigator.of(context).pop();
         }
-      } on Exception catch (e) {
+      }catch (e) {
+        showCupertinoDialog(context: context, builder: (context)=>CupertinoAlertDialog(
+          title: Text("Sign in failed"),
+          content: Text((_formType==EmailSignInFormType.signIn)?"Invalid Email or Password"
+          :e.toString()),
+          actions: [
+            TextButton(onPressed: (){Navigator.of(context).pop();}, child: Text("OK"))
+          ],
+        ));
         print(e.toString());
       }finally{
         setState(() {
@@ -85,7 +92,7 @@ class _LoginWithEmailState extends State<LoginWithEmail> {
         controller: _passwordEditingController,
         keyboardType: TextInputType.emailAddress,
         autocorrect: false,
-        onEditingComplete: _submit,
+        onEditingComplete:_submit,
         onChanged: (string){setState(() {
         });},
         textInputAction: TextInputAction.done,

@@ -23,7 +23,7 @@ class _LoginWithEmailState extends State<LoginWithEmail> {
   EmailSignInFormType _formType = EmailSignInFormType.signIn;
 
   void _submit() async {
-    final auth = Provider.of<AuthClass>(context, listen:false);
+    final auth = Provider.of<AuthBase>(context, listen:false);
     if(_formKey.currentState.validate()){
       setState(() {
         inDelay = true;
@@ -176,5 +176,11 @@ class _LoginWithEmailState extends State<LoginWithEmail> {
         ),
       ),
     );
+  }
+  @override
+  void dispose() {
+    super.dispose();
+    _emailEditingController.dispose();
+    _passwordEditingController.dispose();
   }
 }

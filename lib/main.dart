@@ -13,7 +13,7 @@ void main() async {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Provider<AuthClass>(
+    return Provider<AuthBase>(
       create:(context)=>AuthClass(),
        child: MaterialApp(
            title: 'Time Tracker',

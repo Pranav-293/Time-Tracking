@@ -8,7 +8,7 @@ import 'package:time_tracker/services/auth.dart';
 class LandingPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final auth = Provider.of<AuthClass>(context,listen: false);
+    final auth = Provider.of<AuthBase>(context,listen: false);
     return StreamBuilder<User>(
         stream: auth.authStateChange(),
         builder: (context, snapshot) {

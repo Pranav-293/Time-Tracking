@@ -4,38 +4,63 @@ import 'package:provider/provider.dart';
 import 'package:time_tracker/pages/login_with_email_page.dart';
 import 'package:time_tracker/services/auth.dart';
 
-class MySignInPage extends StatelessWidget {
+class MySignInPage extends StatefulWidget {
 
   //A function for Signing In Anonymously
+  @override
+  _MySignInPageState createState() => _MySignInPageState();
+}
+
+class _MySignInPageState extends State<MySignInPage> {
+   bool isLoading = false;
   Future<void> signInAnonymously(AuthClass auth) async {
     try {
+      setState(() {
+        isLoading = true;
+      });
       await auth.signInAnonymously();
     } catch (e) {
       print(e.toString());
+    }finally{
+      setState(() {
+        isLoading = false;
+      });
     }
   }
 
-  //A function to sign in with google
   Future<void> signInWithGoogle(AuthClass auth) async {
     try {
+      setState(() {
+        isLoading = true;
+      });
       await auth.signInWithGoogle();
     } catch (e) {
       print(e.toString());
+    }finally{
+      setState(() {
+        isLoading = false;
+      });
     }
   }
 
-  //A function for singing in with facebook
   Future<void> signInWithFacebook(AuthClass auth) async {
     try {
+      setState(() {
+        isLoading = true;
+      });
       await auth.signInWithFacebook();
     } catch (e) {
       print(e.toString());
+    }finally{
+      setState(() {
+        isLoading = false;
+      });
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    final auth = Provider.of<AuthClass>(context, listen: false);
+    final auth = Provider.of<AuthBase>(context, listen: false);
     return Scaffold(
       body: SafeArea(
         child: Container(
@@ -58,13 +83,15 @@ class MySignInPage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
 
-              Text(
-                "Sign In",
-                style: TextStyle(
-                    fontSize: 42,
-                    fontWeight: FontWeight.w700,
+              SizedBox(
+                child: (isLoading)?CircularProgressIndicator():Text(
+                  "Sign In",
+                  style: TextStyle(
+                      fontSize: 42,
+                      fontWeight: FontWeight.w700,
+                    ),
                   ),
-                ),
+              ),
 
               SizedBox(
                 height: 50,
@@ -72,7 +99,7 @@ class MySignInPage extends StatelessWidget {
 
               //Sign In using google
               ElevatedButton(
-                onPressed:()=> signInWithGoogle(auth),
+                onPressed:()=> (isLoading)?null:signInWithGoogle(auth),
                 style: ButtonStyle(
                   elevation: MaterialStateProperty.all(6),
                   shape: MaterialStateProperty.all(StadiumBorder()),
@@ -121,7 +148,7 @@ class MySignInPage extends StatelessWidget {
 
               //Sign In using facebook
               ElevatedButton(
-                onPressed:()=> signInWithFacebook(auth),
+                onPressed:()=>(isLoading)?null: signInWithFacebook(auth),
                 style: ButtonStyle(
                   elevation: MaterialStateProperty.all(6),
                   shape: MaterialStateProperty.all(StadiumBorder()),
@@ -170,11 +197,11 @@ class MySignInPage extends StatelessWidget {
               ),
 
               //Sign In using Email
-              ElevatedButton(onPressed: (){
-                Navigator.of(context).push(
-                  MaterialPageRoute(builder:(context)=>LoginWithEmail(),fullscreenDialog: true)
-                );
-              },
+              ElevatedButton(onPressed:(!isLoading)?(){
+                  Navigator.of(context).push(
+                      MaterialPageRoute(builder:(context)=>LoginWithEmail(),fullscreenDialog: true)
+                  );
+              }:null,
                 style: ButtonStyle(
                   elevation: MaterialStateProperty.all(6),
                   shape: MaterialStateProperty.all(StadiumBorder()),
@@ -227,7 +254,7 @@ class MySignInPage extends StatelessWidget {
 
               //Sign In Anonymously
               ElevatedButton(
-                onPressed:()=> signInAnonymously(auth),
+                onPressed:()=>(isLoading)?null: signInAnonymously(auth),
                 style: ButtonStyle(
                   elevation: MaterialStateProperty.all(6),
                   shape: MaterialStateProperty.all(StadiumBorder()),

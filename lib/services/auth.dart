@@ -7,17 +7,17 @@ abstract class AuthBase {
 
   Future<UserCredential> signInAnonymously();
 
+  Future<void> signInWithGoogle();
+
+  Future<void> signInWithFacebook();
+
+  Stream<User> authStateChange();
+
   Future<void> signOut();
 
   Future<void> signInWithEmail(String email, String password);
 
   Future<void> createAccountWithEmail(String email, String password);
-
-  Future<void> signInWithGoogle();
-
-  Stream<User> authStateChange();
-
-  Future<void> signInWithFacebook();
 }
 
 class AuthClass implements AuthBase {

@@ -17,7 +17,7 @@ class LandingPage extends StatelessWidget {
             if (user != null) {
               return HomePage();
             } else {
-              return MySignInPage();
+              return MySignInPage.create(context);
             }
           }
           return Scaffold(

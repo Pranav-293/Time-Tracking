@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:time_tracker/pages/login_with_email_page.dart';
@@ -19,9 +18,6 @@ class MySignInPage extends StatelessWidget {
       ),
     );
   }
-
-  //A function for Signing In Anonymously
-
   Future<void> signInAnonymously() async {
     try {
       await bloc.signInAnonymously();
@@ -53,7 +49,6 @@ class MySignInPage extends StatelessWidget {
         stream: bloc.isLoadingStream,
         initialData: false,
         builder: (context, snapshot) {
-          bool isLoading = snapshot.data;
           return SafeArea(
             child: Container(
               decoration: BoxDecoration(
@@ -74,9 +69,8 @@ class MySignInPage extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-
                   SizedBox(
-                    child: (isLoading)?CircularProgressIndicator():Text(
+                    child: (snapshot.data)?CircularProgressIndicator():Text(
                       "Sign In",
                       style: TextStyle(
                           fontSize: 42,
@@ -91,7 +85,7 @@ class MySignInPage extends StatelessWidget {
 
                   //Sign In using google
                   ElevatedButton(
-                    onPressed:()=> (isLoading)?null:signInWithGoogle(),
+                    onPressed:()=> (snapshot.data)?null:signInWithGoogle(),
                     style: ButtonStyle(
                       elevation: MaterialStateProperty.all(6),
                       shape: MaterialStateProperty.all(StadiumBorder()),
@@ -140,7 +134,7 @@ class MySignInPage extends StatelessWidget {
 
                   //Sign In using facebook
                   ElevatedButton(
-                    onPressed:()=>(isLoading)?null: signInWithFacebook(),
+                    onPressed:()=>(snapshot.data)?null: signInWithFacebook(),
                     style: ButtonStyle(
                       elevation: MaterialStateProperty.all(6),
                       shape: MaterialStateProperty.all(StadiumBorder()),
@@ -189,7 +183,7 @@ class MySignInPage extends StatelessWidget {
                   ),
 
                   //Sign In using Email
-                  ElevatedButton(onPressed:(!isLoading)?(){
+                  ElevatedButton(onPressed:(!snapshot.data)?(){
                       Navigator.of(context).push(
                           MaterialPageRoute(builder:(context)=>LoginWithEmail(),fullscreenDialog: true)
                       );
@@ -246,7 +240,7 @@ class MySignInPage extends StatelessWidget {
 
                   //Sign In Anonymously
                   ElevatedButton(
-                    onPressed:()=>(isLoading)?null: signInAnonymously(),
+                    onPressed:()=>(snapshot.data)?null: signInAnonymously(),
                     style: ButtonStyle(
                       elevation: MaterialStateProperty.all(6),
                       shape: MaterialStateProperty.all(StadiumBorder()),

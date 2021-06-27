@@ -2,8 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:time_tracker/services/auth.dart';
+import 'package:time_tracker/sign_in/sign_in_with_email_model.dart';
 
-enum EmailSignInFormType { signIn, register }
 
 class LoginWithEmail extends StatefulWidget {
   @override

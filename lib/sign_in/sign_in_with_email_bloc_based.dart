@@ -33,7 +33,16 @@ class _SignInWithEmailBlocBasedState extends State<SignInWithEmailBlocBased> {
       try {
          widget.bloc.submit();
          setState(() {
-           Navigator.of(context).pop();
+           if(auth.currentUser!=null) Navigator.of(context).pop();
+           else{
+             showCupertinoDialog(context: this.context, builder: (context)=>CupertinoAlertDialog(
+                 title: Text("Sign in failed"),
+           content: Text((model.formType==EmailSignInFormType.signIn)?"Invalid Email or Password"
+               :"Please write a valid email id for example abc@google.com"),
+           actions: [
+           TextButton(onPressed: (){Navigator.of(context).pop();}, child: Text("OK"))
+           ]));
+           }
          });
       }catch (e) {
         print("hello pranav");

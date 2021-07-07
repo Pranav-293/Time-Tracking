@@ -1,4 +1,3 @@
-import 'package:time_tracker/pages/login_with_email_page.dart';
 
 enum EmailSignInFormType { signIn, register }
 

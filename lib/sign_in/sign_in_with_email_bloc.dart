@@ -41,8 +41,10 @@ class SignInWithEmailBloc {
           ? await auth.signInWithEmail(_model.email, _model.password)
           : await auth.createAccountWithEmail(_model.email, _model.password);
     } catch (e) {
+      throw Exception(e.toString());
+      rethrow;
+    } finally {
       _model.copyWith(isLoading: false);
-      throw Exception("Incorrect Email or password");
     }
   }
 }

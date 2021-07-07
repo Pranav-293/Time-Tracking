@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:time_tracker/pages/login_with_email_page.dart';
 import 'package:time_tracker/services/auth.dart';
 import 'package:time_tracker/sign_in/sign_in_bloc.dart';
+import 'package:time_tracker/sign_in/sign_in_with_email.dart';
 
 class MySignInPage extends StatelessWidget {
   const MySignInPage({Key key, @required this.bloc}) : super(key: key);
@@ -185,7 +186,7 @@ class MySignInPage extends StatelessWidget {
                   //Sign In using Email
                   ElevatedButton(onPressed:(!snapshot.data)?(){
                       Navigator.of(context).push(
-                          MaterialPageRoute(builder:(context)=>LoginWithEmail(),fullscreenDialog: true)
+                          MaterialPageRoute(builder:(context)=>SignInWithEmail(),fullscreenDialog: true)
                       );
                   }:null,
                     style: ButtonStyle(

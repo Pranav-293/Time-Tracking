@@ -93,7 +93,10 @@ class AuthClass implements AuthBase {
       return userCredentials;
     } catch (e) {
       print(e.toString());
-      throw e;
+      throw FirebaseAuthException(
+        code: "Exception_Token_Id_is_Null",
+        message: "Email or Password is badly formatted",
+      );
     }
   }
 
@@ -104,7 +107,10 @@ class AuthClass implements AuthBase {
           .createUserWithEmailAndPassword(email: email, password: password);
       return userCredential;
     }catch(e){
-      throw e;
+      throw FirebaseAuthException(
+        code: "Exception_Token_Id_is_Null",
+        message: "Email or Password is badly formatted",
+      );
     }
   }
 

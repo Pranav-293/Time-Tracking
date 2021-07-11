@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:time_tracker/services/auth.dart';
 
-class HomePage extends StatelessWidget {
+class JobsPage extends StatelessWidget {
   void _signOut(BuildContext context) async{
     final auth = Provider.of<AuthBase>(context, listen: false);
     Navigator.of(context).pop();
@@ -26,7 +26,7 @@ void _showAlert(BuildContext context){
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Home"),
+        title: Text("Jobs"),
         centerTitle: true,
         actions: [
           TextButton(

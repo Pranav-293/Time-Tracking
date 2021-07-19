@@ -1,4 +1,4 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -6,7 +6,8 @@ import 'package:time_tracker/common_widgets/alert_exception_dialogue_box.dart';
 import 'package:time_tracker/services/auth.dart';
 import 'package:time_tracker/services/database.dart';
 
-import 'models/job.dart';
+import 'job.dart';
+
 
 class JobsPage extends StatelessWidget {
   void _signOut(BuildContext context) async {
@@ -36,7 +37,7 @@ class JobsPage extends StatelessWidget {
   Future<void> _createJob(BuildContext context) async {
     try {
       final dataBase = Provider.of<Database>(context, listen: false);
-      await dataBase.createJob(Job(name: "Coding", ratePerHour: 10));
+      await dataBase.createJob(JobModel(name: "Coding", ratePerHour: 10));
     } catch (e) {
       alertExceptionDialogue(
           context: context, heading: "Operation Failed", message: e.toString());
@@ -72,7 +73,7 @@ class JobsPage extends StatelessWidget {
 
   Widget _buildContent(BuildContext context) {
     final database = Provider.of<Database>(context, listen: false);
-    return StreamBuilder<List<Job>>(
+    return StreamBuilder<List<JobModel>>(
         stream: database.streamJobs(),
         builder: (context, snapshot) {
           if (snapshot.hasData) {

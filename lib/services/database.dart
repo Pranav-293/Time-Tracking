@@ -1,6 +1,6 @@
 
 import 'package:flutter/cupertino.dart';
-import '../home/job.dart';
+import 'package:time_tracker/home/jobs/job.dart';
 import 'package:time_tracker/services/FireStore_services.dart';
 import 'package:time_tracker/services/api_path.dart';
 

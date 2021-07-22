@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:time_tracker/custom_widgets/job_list_tile.dart';
-import 'package:time_tracker/home/jobs/add_job_page.dart';
+import 'package:time_tracker/home/jobs/edit_job_page.dart';
 import 'package:time_tracker/home/jobs/job.dart';
 import 'package:time_tracker/services/auth.dart';
 import 'package:time_tracker/services/database.dart';
@@ -54,7 +54,7 @@ class JobsPage extends StatelessWidget {
       body: _buildContent(context),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
-        onPressed: () => AddJobPage.show(context),
+        onPressed: () => EditJobPage.show(context),
       ),
     );
   }
@@ -67,7 +67,11 @@ class JobsPage extends StatelessWidget {
           if (snapshot.hasData) {
             final jobs = snapshot.data;
             final children = jobs
-                .map((job) =>JobListTile(job: job,onTap: (){},)).toList();
+                .map((job) => JobListTile(
+                      job: job,
+                      onTap:()=> EditJobPage.show(context,job: job),
+                    ))
+                .toList();
             return ListView(children: children);
           }
           if (snapshot.hasError) {

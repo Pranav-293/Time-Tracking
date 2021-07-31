@@ -18,7 +18,7 @@ class JobListTile extends StatelessWidget {
           title: Text(
             job.name,
             style: TextStyle(
-              fontWeight: FontWeight.w700,
+              fontWeight: FontWeight.w600,
               fontSize: 20,
             ),
           ),
